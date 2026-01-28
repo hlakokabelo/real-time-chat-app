@@ -1,12 +1,18 @@
-import {Client} from 'appwrite'
-const VITE_APPWRITE_PROJECT_ID = process.env.VITE_APPWRITE_PROJECT_ID
-const VITE_APPWRITE_PROJECT_NAME =process.env.VITE_APPWRITE_PROJECT_NAME
-const VITE_APPWRITE_ENDPOINT = process.env.VITE_APPWRITE_ENDPOINT
-        
+import { Client, TablesDB } from "appwrite";
+
+const clientCred = {
+  PROJECT_ID: import.meta.env.VITE_APPWRITE_PROJECT_ID,
+  PROJECT_NAME: import.meta.env.VITE_APPWRITE_PROJECT_NAME,
+  ENDPOINT: import.meta.env.VITE_APPWRITE_ENDPOINT,
+  DB_ID: import.meta.env.VITE_APPWRITE_DB_ID,
+  TABLE_ID_MESSAGES: import.meta.env.VITE_APPWRITE_TABLE_ID_MESSAGES,
+};
 
 const client = new Client();
 
-client.setEndpoint("https://nyc.cloud.appwrite.io/v1").setProject("697809ec000b80ccd480");
 
 
-export default client;
+client.setEndpoint(clientCred.ENDPOINT).setProject(clientCred.PROJECT_ID);
+const db = new TablesDB(client);
+
+export { client, db, clientCred };
