@@ -17,29 +17,25 @@ const Room = () => {
         const realtime = new Realtime(client)
         //databases.<DATABASE_ID>.tables.<TABLE_ID>.rows.<ROW_ID>
 
-        const setSubscription = async () => {
-            const meth = await realtime.subscribe(`databases.${clientCred.DB_ID}.collections.${clientCred.TABLE_ID_MESSAGES}.documents`,
-                res => {
 
-                    console.log(res.events[0])
+        const subscription = client.subscribe(`databases.${clientCred.DB_ID}.collections.${clientCred.TABLE_ID_MESSAGES}.documents`,
+            res => {
 
-                    if (res.events[0].includes('create')) {
-                       console.log('triger crea')
-                        setMessages(prevState => [res.payload, ...prevState])
-                    } 
-                    if (res.events.in('delete')) {
-                       
-                       console.log('triger del')
-                        setMessages(prevState => prevState.filter(msg => msg.$id !== res.payload.$id))
-                    }
+                if (res.events[0].includes('create')) {
+                    console.log('triger crea')
+                    setMessages(prevState => [res.payload, ...prevState])
                 }
-            );
+                if (res.events[0].includes('delete')) {
+
+                    console.log('triger del')
+                    setMessages(prevState => prevState.filter(msg => msg.$id !== res.payload.$id))
+                }
+            }
+        );
 
 
-            meth.close
-        }
 
-        setSubscription()
+        return () => subscription()
 
     }, [])
 
@@ -76,7 +72,10 @@ const Room = () => {
             <div >
                 <form onSubmit={handleSubmit} id="messages--form">
                     <div>
-                        <textarea required
+                        <textarea
+
+                            id='text-area-message'
+                            required
                             maxLength='1000'
                             placeholder='msg'
                             value={messageBody}
