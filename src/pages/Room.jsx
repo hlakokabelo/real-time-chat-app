@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { db, clientCred, client } from '../appwriteConfig'
 import { deleteMessage, getMessages, sendMessage } from '../components/RoomComponent'
-import { ID, Realtime } from 'appwrite'
+import { Realtime } from 'appwrite'
 import { Trash2 } from 'react-feather'
+import Header from '../components/Header'
 
 const Room = () => {
 
@@ -16,8 +17,6 @@ const Room = () => {
 
         const realtime = new Realtime(client)
         //databases.<DATABASE_ID>.tables.<TABLE_ID>.rows.<ROW_ID>
-
-
         const subscription = client.subscribe(`databases.${clientCred.DB_ID}.collections.${clientCred.TABLE_ID_MESSAGES}.documents`,
             res => {
 
@@ -70,6 +69,7 @@ const Room = () => {
     return (
         <main className='container'>
             <div >
+                <Header/>
                 <form onSubmit={handleSubmit} id="messages--form">
                     <div>
                         <textarea

@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../hooks/Auth'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../utils/AuthContext'
+
+
 const LoginPage = () => {
 
     const { user, handleUserLogin } = useAuth();
     const navigate = useNavigate()
+
+
 
     const [credentials, setCredentials] = useState({ email: '', password: '' })
 
@@ -20,7 +24,7 @@ const LoginPage = () => {
 
         // [name] informs react that the name is dynamic.
         setCredentials({ ...credentials, [name]: value })
-       
+
     }
 
     return (
@@ -57,6 +61,7 @@ const LoginPage = () => {
                         />
                     </div>
                 </form>
+                <p>Dont have an account? Register <Link to="/register">here</Link></p>
             </div>
         </div>
     )
