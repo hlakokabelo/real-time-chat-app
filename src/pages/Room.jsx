@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { db, clientCred } from '../appwriteConfig'
+import { db, clientCred, client } from '../appwriteConfig'
 import { deleteMessage, getMessages, sendMessage } from '../components/RoomComponent'
-import { ID } from 'appwrite'
+import { ID, Realtime } from 'appwrite'
 import { Trash2 } from 'react-feather'
 
 const Room = () => {
@@ -9,9 +9,40 @@ const Room = () => {
 
     const [messages, setMessages] = useState([])
     const [messageBody, setMessageBody] = useState('')
+
+    const [dis, setDis] = useState([])
     useEffect(() => {
         handleGetMessages()
+
+        const realtime = new Realtime(client)
+        //databases.<DATABASE_ID>.tables.<TABLE_ID>.rows.<ROW_ID>
+
+        const setSubscription = async () => {
+            const meth = await realtime.subscribe(`databases.${clientCred.DB_ID}.collections.${clientCred.TABLE_ID_MESSAGES}.documents`,
+                res => {
+
+                    console.log(res.events[0])
+
+                    if (res.events[0].includes('create')) {
+                       console.log('triger crea')
+                        setMessages(prevState => [res.payload, ...prevState])
+                    } 
+                    if (res.events.in('delete')) {
+                       
+                       console.log('triger del')
+                        setMessages(prevState => prevState.filter(msg => msg.$id !== res.payload.$id))
+                    }
+                }
+            );
+
+
+            meth.close
+        }
+
+        setSubscription()
+
     }, [])
+
 
     const handleGetMessages = async () => {
         const { total, rows } = await getMessages();
@@ -27,8 +58,8 @@ const Room = () => {
         let payload = {
             body: messageBody,
         }
-        const response = await sendMessage(payload);
-        setMessages(prevState => [response, ...messages])
+        sendMessage(payload);
+
         setMessageBody('')
     }
     const handleOnchage = (e) => {
@@ -36,9 +67,8 @@ const Room = () => {
     }
 
 
-    const handleDeleteMessage = async($id) => {
-         deleteMessage($id)
-        setMessages(prevState=>messages.filter(msg =>msg.$id!==$id))
+    const handleDeleteMessage = async ($id) => {
+        deleteMessage($id)
     }
 
     return (
@@ -63,8 +93,9 @@ const Room = () => {
                         <div className='message--wrapper' key={message.$id}>
 
                             <div className='message--header'>
-                                <small className='message-timestamp'>{message.$createdAt}</small>
-                                <Trash2 onClick={() => handleDeleteMessage(message.$id)} />
+                                <small className='message-timestamp'>
+                                    {new Date(message.$createdAt).toLocaleString()}</small>
+                                <Trash2 className='delete--btn' onClick={() => handleDeleteMessage(message.$id)} />
                             </div>
                             <div className='message--body'>
                                 <span> {message.body}</span>

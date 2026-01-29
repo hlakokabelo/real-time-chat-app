@@ -1,4 +1,4 @@
-import { Client, TablesDB } from "appwrite";
+import { Client, Realtime, TablesDB } from "appwrite";
 
 const clientCred = {
   PROJECT_ID: import.meta.env.VITE_APPWRITE_PROJECT_ID,
@@ -9,7 +9,6 @@ const clientCred = {
 };
 
 const client = new Client();
-
 
 
 client.setEndpoint(clientCred.ENDPOINT).setProject(clientCred.PROJECT_ID);
