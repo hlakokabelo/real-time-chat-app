@@ -1,6 +1,8 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { account } from "../appwriteConfig";
 import { useNavigate } from "react-router-dom";
+import { ID } from "appwrite";
+import { Loader } from "react-feather";
 
 
 
@@ -42,7 +44,9 @@ export const AuthProvider = ({ children }) => {
         try {
             let accountDetails = await account.get();
             setUser(accountDetails);
-        } catch (error) { }
+        } catch (error) {
+            console.warn(error)
+         }
         setLoading(false);
     };
 
@@ -64,7 +68,9 @@ export const AuthProvider = ({ children }) => {
             );
             console.log("User registered!", response);
 
-            await account.createEmailSession(
+
+          
+            await account.createEmailPasswordSession(
                 credentials.email,
                 credentials.password1
             );
@@ -88,7 +94,7 @@ export const AuthProvider = ({ children }) => {
     }, [])
 
     return (<AuthContext.Provider value={contextData}>
-        {loading ? <p>...loading</p> : children}
+        {loading ? <p style={{textAlign: "center",fontSize:'50px'}}><Loader /></p> : children}
     </AuthContext.Provider>)
 }
 

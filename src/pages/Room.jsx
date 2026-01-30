@@ -4,9 +4,11 @@ import { deleteMessage, getMessages, sendMessage } from '../components/RoomCompo
 import { Realtime } from 'appwrite'
 import { Trash2 } from 'react-feather'
 import Header from '../components/Header'
+import { useAuth } from '../utils/AuthContext'
 
 const Room = () => {
 
+    const { user } = useAuth()
 
     const [messages, setMessages] = useState([])
     const [messageBody, setMessageBody] = useState('')
@@ -51,6 +53,8 @@ const Room = () => {
         e.preventDefault();
 
         let payload = {
+            user_id: user.$id,
+            username: user.name,  //because we dont ask for username
             body: messageBody,
         }
         sendMessage(payload);
@@ -69,7 +73,7 @@ const Room = () => {
     return (
         <main className='container'>
             <div >
-                <Header/>
+                <Header />
                 <form onSubmit={handleSubmit} id="messages--form">
                     <div>
                         <textarea
@@ -92,8 +96,15 @@ const Room = () => {
                         <div className='message--wrapper' key={message.$id}>
 
                             <div className='message--header'>
-                                <small className='message-timestamp'>
-                                    {new Date(message.$createdAt).toLocaleString()}</small>
+                                <p>
+                                    {message?.username?
+                                        <span>{message.username}</span> :
+                                        <span>anonymous user</span>}
+
+                                    <small className='message-timestamp'>
+                                        {new Date(message.$createdAt).toLocaleString()}</small>
+                                </p>
+                                
                                 <Trash2 className='delete--btn' onClick={() => handleDeleteMessage(message.$id)} />
                             </div>
                             <div className='message--body'>
