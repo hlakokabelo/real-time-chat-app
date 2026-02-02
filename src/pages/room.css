@@ -58,12 +58,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  
+
 }
 
 .form--wrapper {
   width: 600px;
   width: 600px;
   padding: 2em;
+  border-color: #e0e41a;
+  border-left-width: thick;
+  background-color: #386fd2;
 }
 
 .field--wrapper {

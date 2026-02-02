@@ -11,8 +11,6 @@ const people = [
     { id: 10, name: "LeBron James" }
 ];
 
-
 export const getListFriends = () => {
-
     return people;
 }

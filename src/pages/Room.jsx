@@ -10,7 +10,7 @@ import './room.css'
 
 const Room = () => {
 
-    const { user,talkingWith } = useAuth()
+    const { user, talkingWith } = useAuth()
 
     const [messages, setMessages] = useState([])
     const [messageBody, setMessageBody] = useState('')
@@ -26,7 +26,7 @@ const Room = () => {
 
                 if (res.events[0].includes('create')) {
                     console.log('triger crea')
-                    setMessages(prevState => [ ...prevState,res.payload])
+                    setMessages(prevState => [...prevState, res.payload])
                 }
                 if (res.events[0].includes('delete')) {
 
@@ -129,49 +129,56 @@ const Room = () => {
 
 
     return (
-        <div className='header-room-form'>
-            <HeaderContact />
-            <div className='container'>
-                <div className="room-sub-container">
-                    <div className="room--container">
-                        {messages.map(message => (
-                            <div className={'message--wrapper' + getClassName(message)} key={message.$id}>
+        <>
+            {
+                talkingWith ?
+                    <div className='header-room-form'>
+                        <HeaderContact />
+                        <div className='container'>
+                            <div className="room-sub-container">
+                                <div className="room--container">
+                                    {messages.map(message => (
+                                        <div className={'message--wrapper' + getClassName(message)} key={message.$id}>
 
-                                <div className='message--header'>
-                                    <p>
-                                        <small className='message-timestamp'>
-                                            {formatMessageTime(message.$createdAt)}</small>
-                                    </p>
+                                            <div className='message--header'>
+                                                <p>
+                                                    <small className='message-timestamp'>
+                                                        {formatMessageTime(message.$createdAt)}</small>
+                                                </p>
 
-                                    {message.$permissions.includes(`delete(\"user:${user.$id}\")`) && (
-                                        <Trash2 className="delete--btn" onClick={() => { handleDeleteMessage(message.$id) }} />
+                                                {message.$permissions.includes(`delete(\"user:${user.$id}\")`) && (
+                                                    <Trash2 className="delete--btn" onClick={() => { handleDeleteMessage(message.$id) }} />
 
-                                    )}
-                                </div>
-                                <div className={'message--body' + getClassName(message)}>
-                                    <span> {message.body}</span>
+                                                )}
+                                            </div>
+                                            <div className={'message--body' + getClassName(message)}>
+                                                <span> {message.body}</span>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-                        ))}
-                    </div>
-                </div>
 
-            </div>
-            <form onSubmit={handleSubmit} id="messages--form">
-                <div className='text-btn-input'>
-                    <textarea
+                        </div>
+                        <form onSubmit={handleSubmit} id="messages--form">
+                            <div className='text-btn-input'>
+                                <textarea
 
-                        id='text-area-message'
-                        required
-                        maxLength='1000'
-                        placeholder='msg'
-                        value={messageBody}
-                        onChange={(e) => handleOnchage(e)}></textarea>
-                    <input className='btn btn--secondary' type="submit" value="Send" />
+                                    id='text-area-message'
+                                    required
+                                    maxLength='1000'
+                                    placeholder='msg'
+                                    value={messageBody}
+                                    onChange={(e) => handleOnchage(e)}></textarea>
+                                <input className='btn btn--secondary' type="submit" value="Send" />
 
-                </div>
-            </form></div>
-    )
+                            </div>
+                        </form></div>
+
+
+                    : ' '
+            }
+        </>)
 }
 
 export default Room
