@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
     //makes certain we load a page before rendering, complete loading data then display
     const [loading, setLoading] = useState(true)
     const [user, setUser] = useState(null)
+    const [talkingWith, setTalkingWith] = useState('') // stores the current user we are talking to
     const navigate = useNavigate()
 
 
@@ -46,11 +47,11 @@ export const AuthProvider = ({ children }) => {
             setUser(accountDetails);
         } catch (error) {
             console.warn(error)
-         }
+        }
         setLoading(false);
     };
 
- const handleRegister = async (e, credentials) => {
+    const handleRegister = async (e, credentials) => {
         e.preventDefault();
         console.log("Handle Register triggered!", credentials);
 
@@ -69,7 +70,7 @@ export const AuthProvider = ({ children }) => {
             console.log("User registered!", response);
 
 
-          
+
             await account.createEmailPasswordSession(
                 credentials.email,
                 credentials.password1
@@ -82,9 +83,14 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const changeTalkingTo = (newTalk) => {
+        setTalkingWith(newTalk)
+    }
 
     const contextData = {
         user,
+        talkingWith,
+        changeTalkingTo,
         handleLogout,
         handleUserLogin,
         handleRegister
@@ -94,7 +100,7 @@ export const AuthProvider = ({ children }) => {
     }, [])
 
     return (<AuthContext.Provider value={contextData}>
-        {loading ? <p style={{textAlign: "center",fontSize:'50px'}}><Loader /></p> : children}
+        {loading ? <p style={{ textAlign: "center", fontSize: '50px' }}><Loader /></p> : children}
     </AuthContext.Provider>)
 }
 

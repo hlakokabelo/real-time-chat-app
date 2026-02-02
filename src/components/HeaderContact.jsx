@@ -5,30 +5,20 @@ import { LogOut, LogIn } from 'react-feather'
 import './header.css'
 import { getInitials } from '../pages/SideNav'
 const Header = () => {
-    const { user, handleLogout } = useAuth()
-    const status ='true'
-     const userName = 'My Friend'
+    const { user, handleLogout, talkingWith } = useAuth()
+    const status = 'true'
     return (
-       
+
         <div id="">
-    
-
-
             <header className="chat-header">
-            <div className="center">
-                <div className="avatar">{getInitials(userName)}</div>
-                    <span className="username">{userName}</span>
+                <div className="center">
+                    <div className="avatar">{talkingWith ? getInitials(talkingWith) : 'start chat'}</div>
+                    <span className="username">{talkingWith}</span>
                 </div>
-
                 <div className="right">
-                    
                     <button className="icon">☰</button>
                 </div>
             </header>
-
-
-
-
         </div>
     )
 }

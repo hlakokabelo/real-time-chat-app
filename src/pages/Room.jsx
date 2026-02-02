@@ -10,7 +10,7 @@ import './room.css'
 
 const Room = () => {
 
-    const { user } = useAuth()
+    const { user,talkingWith } = useAuth()
 
     const [messages, setMessages] = useState([])
     const [messageBody, setMessageBody] = useState('')
@@ -26,7 +26,7 @@ const Room = () => {
 
                 if (res.events[0].includes('create')) {
                     console.log('triger crea')
-                    setMessages(prevState => [res.payload, ...prevState])
+                    setMessages(prevState => [ ...prevState,res.payload])
                 }
                 if (res.events[0].includes('delete')) {
 
@@ -144,7 +144,7 @@ const Room = () => {
                                     </p>
 
                                     {message.$permissions.includes(`delete(\"user:${user.$id}\")`) && (
-                                        <Trash2 className="delete--btn" onClick={() => { deleteMessage(message.$id) }} />
+                                        <Trash2 className="delete--btn" onClick={() => { handleDeleteMessage(message.$id) }} />
 
                                     )}
                                 </div>

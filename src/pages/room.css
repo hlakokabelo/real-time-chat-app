@@ -29,13 +29,26 @@ body {
   color: var(--textColorMain);
 }
 
-.container {
-  height: 77vh;
+.header-room-form{
+    width: 100%;
+    flex-direction: row-reverse;
+}
+
+.text-btn-input {
+  flex-direction: row;
+  overflow: auto;
+  margin: 10px;
+  display: flex;
+}
+.container { 
+  height: 75%;
   overflow: auto;
   scrollbar-width:thin;
-  flex-direction: column;
+  flex-direction: column-reverse;
   display: flex;
+  scroll-behavior: smooth;
   scrollbar-color: gray var(--mainBgColor);
+ 
 }
 
 /* Login & Register Pages */
@@ -141,12 +154,7 @@ textarea {
   color: #8db3dd;
 }
 
-.text-btn-input {
-  flex-direction: row;
-  overflow: auto;
-  margin: 12px;
-  display: flex;
-}
+
 
 /* Room Styling */
 

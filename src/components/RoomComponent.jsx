@@ -42,7 +42,7 @@ const getMessages = async () => {
             databaseId: clientCred.DB_ID
             , tableId: clientCred.TABLE_ID_MESSAGES,
             queries: [
-                Query.orderDesc('$createdAt'),
+                Query.orderAsc('$createdAt'),
                 Query.limit(16)
             ]
         })
