@@ -2,7 +2,7 @@ import { clientCred, client, db, } from '../appwriteConfig'
 import { ID, Query } from 'appwrite'
 
 
-const sendMessage = async (payload) => {
+const sendMessage = async (payload,permissions) => {
 
 
     try {
@@ -10,7 +10,8 @@ const sendMessage = async (payload) => {
             databaseId: clientCred.DB_ID,
             tableId: clientCred.TABLE_ID_MESSAGES,
             rowId: ID.unique(),
-            data: payload
+            data: payload,
+            permissions:permissions
         });
         return response;
     } catch (error) {

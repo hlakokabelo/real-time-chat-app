@@ -1,0 +1,102 @@
+.sidenav {
+  width: 260px;
+  height: 100vh;
+  background: linear-gradient(180deg, #0f0f14, #14141c);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  box-shadow: 5px 0 20px rgba(0,0,0,0.4);
+  
+  width: 260px;
+  flex-shrink: 0;
+
+
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+/* Nav */
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: transparent;
+  border: none;
+  color: #bbb;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.nav-item:hover {
+  background: rgba(255,255,255,0.06);
+  color: white;
+}
+
+.nav-item.active {
+  background: linear-gradient(90deg, #6d5cff, #9f7aea);
+  color: white;
+}
+
+/* Profile */
+.profile {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+}
+
+.avatar {
+  background: linear-gradient(135deg, #6d5cff, #9f7aea);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.name {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.status {
+  font-size: 0.75rem;
+  color: #7CFF8A;
+}
+
+.logout {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: 0.2s;
+}
+
+.logout:hover {
+  opacity: 1;
+  color: #ff6b6b;
+}

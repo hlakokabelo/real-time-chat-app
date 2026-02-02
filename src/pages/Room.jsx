@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { db, clientCred, client } from '../appwriteConfig'
 import { deleteMessage, getMessages, sendMessage } from '../components/RoomComponent'
-import { Realtime } from 'appwrite'
+import { Realtime, Permission, Role } from 'appwrite'
 import { Trash2 } from 'react-feather'
 import Header from '../components/Header'
 import { useAuth } from '../utils/AuthContext'
+import './room.css'
+
 
 const Room = () => {
 
@@ -57,7 +59,12 @@ const Room = () => {
             username: user.name,  //because we dont ask for username
             body: messageBody,
         }
-        sendMessage(payload);
+
+        //grunts current user the person to delete and update current message
+        const permissions = [
+            Permission.write(Role.user(user.$id)),
+        ]
+        sendMessage(payload, permissions);
 
         setMessageBody('')
     }
@@ -70,12 +77,29 @@ const Room = () => {
         deleteMessage($id)
     }
 
+
+    const getClassName = (message) => {
+        return (message.$permissions.includes(`delete(\"user:${user.$id}\")`) ? '--owner' : '')
+
+    }
+
+    const formatChatTimeLocal = (isoString) => {
+        const date = new Date(isoString);
+
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const dayShort = days[date.getDay()];
+
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        return `${dayShort} ${hours}:${minutes}`;
+    }
     return (
-        <main className='container'>
+
+        <div className='container'>
             <div >
-                <Header />
                 <form onSubmit={handleSubmit} id="messages--form">
-                    <div>
+                    <div className='text-btn-input'>
                         <textarea
 
                             id='text-area-message'
@@ -84,37 +108,38 @@ const Room = () => {
                             placeholder='msg'
                             value={messageBody}
                             onChange={(e) => handleOnchage(e)}></textarea>
+                        <input className='btn btn--secondary' type="submit" value="Send" />
+
                     </div>
                     <div className='send-btn--wrapper'>
-                        <input className='btn btn--secondary' type="submit" value="Send" />
                     </div>
 
 
                 </form>
-                <div className="room-container">
+                <div className="room--container">
                     {messages.map(message => (
-                        <div className='message--wrapper' key={message.$id}>
+                        <div className={'message--wrapper' + getClassName(message)} key={message.$id}>
 
                             <div className='message--header'>
                                 <p>
-                                    {message?.username?
-                                        <span>{message.username}</span> :
-                                        <span>anonymous user</span>}
-
                                     <small className='message-timestamp'>
-                                        {new Date(message.$createdAt).toLocaleString()}</small>
+                                        {formatChatTimeLocal(message.$createdAt)}</small>
                                 </p>
-                                
-                                <Trash2 className='delete--btn' onClick={() => handleDeleteMessage(message.$id)} />
+
+                                {message.$permissions.includes(`delete(\"user:${user.$id}\")`) && (
+                                    <Trash2 className="delete--btn" onClick={() => { deleteMessage(message.$id) }} />
+
+                                )}
                             </div>
-                            <div className='message--body'>
+                            <div className={'message--body' + getClassName(message)}>
                                 <span> {message.body}</span>
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
-        </main>
+        </div>
+
     )
 }
 

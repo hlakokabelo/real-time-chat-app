@@ -1,0 +1,78 @@
+.chat-header {
+  height: 64px;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,.6);
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+
+/* Left */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.logo {
+  font-size: 1.6rem;
+}
+
+.app-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: .04em;
+}
+
+/* Center */
+.center {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.username {
+  font-size: .95rem;
+  opacity: .9;
+}
+
+/* Status dot */
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: gray;
+}
+
+.status-dot.online {
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+.status-dot.offline {
+  background: #ef4444;
+}
+
+/* Right */
+.right {
+  display: flex;
+  gap: .5rem;
+}
+
+.icon {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: .4rem .6rem;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.icon:hover {
+  background: rgba(255,255,255,.08);
+}
