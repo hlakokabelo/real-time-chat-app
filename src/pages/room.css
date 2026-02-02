@@ -30,11 +30,12 @@ body {
 }
 
 .container {
-  flex: 1;
-  height: 100vh;
-  flex-direction:row-reverse;
-  
+  height: 77vh;
   overflow: auto;
+  scrollbar-width:thin;
+  flex-direction: column;
+  display: flex;
+  scrollbar-color: gray var(--mainBgColor);
 }
 
 /* Login & Register Pages */
@@ -77,7 +78,7 @@ input[type="email"] {
 }
 textarea {
   border-radius: 3px;
-  border-color:  #40e0d0;
+  border-color: #40e0d0;
   font-size: larger;
   width: 90%;
   border-radius: 12px;
@@ -140,12 +141,11 @@ textarea {
   color: #8db3dd;
 }
 
-.text-btn-input{
-    flex-direction: row;
-    overflow: auto;
-    margin: 12px;
-    display: flex;
-    
+.text-btn-input {
+  flex-direction: row;
+  overflow: auto;
+  margin: 12px;
+  display: flex;
 }
 
 /* Room Styling */
@@ -155,8 +155,6 @@ textarea {
   background-color: var(--secondaryBgColor);
   border-radius: 20px;
   border: 1px solid var(--borderColor1);
-  overflow: auto;
-  
 }
 
 #message--form {
@@ -178,13 +176,13 @@ textarea {
   gap: 0.5em;
   margin: 1em;
 }
-.message--wrapper--owner{
+.message--wrapper--owner {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   gap: 0.5em;
   margin: 1em;
- align-items: end;
+  align-items: end;
 }
 .message--header {
   display: flex;

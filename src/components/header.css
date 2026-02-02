@@ -39,23 +39,6 @@
   opacity: .9;
 }
 
-/* Status dot */
-.status-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: gray;
-}
-
-.status-dot.online {
-  background: #22c55e;
-  box-shadow: 0 0 6px #22c55e;
-}
-
-.status-dot.offline {
-  background: #ef4444;
-}
-
 /* Right */
 .right {
   display: flex;

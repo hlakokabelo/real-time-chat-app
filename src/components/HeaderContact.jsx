@@ -3,27 +3,25 @@ import { useAuth } from '../utils/AuthContext'
 import { Link } from 'react-router-dom'
 import { LogOut, LogIn } from 'react-feather'
 import './header.css'
+import { getInitials } from '../pages/SideNav'
 const Header = () => {
     const { user, handleLogout } = useAuth()
     const status ='true'
+     const userName = 'My Friend'
     return (
+       
         <div id="">
     
 
 
             <header className="chat-header">
-                <div className="left">
-                    <div className="logo">💬</div>
-                    <span className="app-name">Whisper</span>
-                </div>
-
-                <div className="center">
-                    <div className={`status-dot ${status}`}></div>
-                    <span className="username">{user.username}</span>
+            <div className="center">
+                <div className="avatar">{getInitials(userName)}</div>
+                    <span className="username">{userName}</span>
                 </div>
 
                 <div className="right">
-                    <button className="icon">🔍</button>
+                    
                     <button className="icon">☰</button>
                 </div>
             </header>

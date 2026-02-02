@@ -1,24 +1,27 @@
 import { appName } from "../App";
+import { getListFriends } from "../database/demoData";
 import { useAuth } from "../utils/AuthContext";
 import "./sidenav.css";
 import { FaComments, FaUserFriends, FaCog, FaSignOutAlt } from "react-icons/fa";
 
 
-
+export function getInitials(name) {
+    return name
+        .trim()
+        .split(/\s+/)
+        .map(word => word[0].toUpperCase())
+        .join("");
+}
 export default function SideNav() {
     const { user, handleLogout } = useAuth()
     const userName = user.name
-    function getInitials(name) {
-        return name
-            .trim()
-            .split(/\s+/)
-            .map(word => word[0].toUpperCase())
-            .join("");
-    }
+
+
+    const friends = getListFriends();
     return (
         <div className="sidenav">
             <div className="logo">
-                <h2 style={{color:'#cedb74'}}> {appName}</h2>
+                <h2 style={{ color: '#cedb74' }}> {appName}</h2>
             </div>
 
             <nav>
@@ -27,10 +30,11 @@ export default function SideNav() {
                     <span>Chats</span>
                 </button>
 
-                <button className="nav-item">
-                    <FaUserFriends />
-                    <span>Friends</span>
-                </button>
+                {friends.map((f) => (
+                    <button className="nav-item">
+                        <span>{f}</span>
+                    </button>
+                ))}
 
                 <button className="nav-item">
                     <FaCog />

@@ -10,8 +10,9 @@
   
   width: 260px;
   flex-shrink: 0;
-
-
+overflow: auto;
+scrollbar-width: thin;
+scrollbar-color : gray rgba(20, 20, 31, 11);
 }
 
 /* Logo */

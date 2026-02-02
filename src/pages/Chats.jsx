@@ -1,6 +1,6 @@
 import React from 'react'
 import Room from './Room'
-import Header from '../components/Header'
+import Header from '../components/HeaderContact'
 import SideNav from './SideNav'
 import './chats.css'
 
