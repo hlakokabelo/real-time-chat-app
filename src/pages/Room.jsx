@@ -63,6 +63,7 @@ const Room = () => {
         //grunts current user the person to delete and update current message
         const permissions = [
             Permission.write(Role.user(user.$id)),
+        
         ]
         sendMessage(payload, permissions);
 
@@ -130,8 +131,7 @@ const Room = () => {
 
     return (
         <>
-            {
-                talkingWith ?
+            {talkingWith ?
                     <div className='header-room-form'>
                         <HeaderContact />
                         <div className='container'>

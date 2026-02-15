@@ -6,7 +6,7 @@ import { FaComments, FaUserFriends, FaCog, FaSignOutAlt } from "react-icons/fa";
 
 
 export function getInitials(name) {
-  
+
     return name
         .trim()
         .split(/\s+/)
@@ -32,9 +32,11 @@ export default function SideNav() {
                 </button>
 
                 {friends.map((friend) => (
-                    <button className="nav-item" key={friend.id} onClick={()=>{changeTalkingTo(friend.name)}}>
-                        <span>{friend.name}</span>
-                    </button>
+                    <div className="" key={friend.$id}>
+                        <button className="nav-item" onClick={() => { changeTalkingTo(friend.name) }}>
+                            <span>{friend.name}</span>
+                        </button>
+                    </div>
                 ))}
 
                 <button className="nav-item">

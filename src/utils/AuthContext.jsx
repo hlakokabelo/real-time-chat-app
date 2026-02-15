@@ -84,6 +84,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const changeTalkingTo = (newTalk) => {
+        //pass user and setConversationID, setEffect by convID
         setTalkingWith(newTalk)
     }
 
