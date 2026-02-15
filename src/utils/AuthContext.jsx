@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }) => {
 
             let accountDetails = await account.get();
             setUser(accountDetails);
+            console.log(accountDetails)
             navigate("/");
 
         } catch (error) {
@@ -38,7 +39,9 @@ export const AuthProvider = ({ children }) => {
 
     const handleLogout = async () => {
         const response = await account.deleteSession("current");
-        setUser(null);
+        console.log({response})
+        await setUser(null);
+        navigate("/login");
     };
 
     const getUserOnLoad = async () => {

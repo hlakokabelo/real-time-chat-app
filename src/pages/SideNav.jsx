@@ -53,7 +53,7 @@ export default function SideNav() {
                 </div>
 
 
-                <FaSignOutAlt className="logout" onClick={() => alert('Logging out')} />
+                <FaSignOutAlt className="logout" onClick={() => handleLogout()} />
 
             </div>
         </div>
